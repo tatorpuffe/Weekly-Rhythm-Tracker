@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Weekly Rhythm System</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #ffffff;
+            margin: 0;
+            padding: 15px;
+            line-height: 1.4;
+        }
+
+```
+    .container {
+        max-width: 450px;
+        margin: 0 auto;
+    }
+    
+    .header {
+        text-align: center;
+        margin-bottom: 20px;
+        background: rgba(255,255,255,0.1);
+        padding: 15px;
+        border-radius: 12px;
+        backdrop-filter: blur(10px);
+    }
+    
+    .header h1 {
+        margin: 0 0 5px 0;
+        font-size: 24px;
+        font-weight: 700;
+    }
+    
+    .header p {
+        margin: 0;
+        opacity: 0.8;
+        font-size: 14px;
+    }
+    
+    .view-toggle {
+        display: flex;
+        background: rgba(255,255,255,0.1);
+        border-radius: 8px;
+        padding: 4px;
+        margin-bottom: 20px;
+    }
+    
+    .toggle-btn {
+        flex: 1;
+        background: transparent;
+        border: none;
+        color: #ffffff;
+        padding: 8px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: all 0.2s;
+    }
+    
+    .toggle-btn.active {
+        background: rgba(74, 144, 226, 0.3);
+        color: #4a90e2;
+    }
+    
+    .view-section {
+        display: none;
+    }
+    
+    .view-section.active {
+        display: block;
+    }
+    
+    .time-block {
+        background: rgba(255,255,255,0.08);
+        border-radius: 12px;
+        padding: 15px;
+        margin-bottom: 12px;
+        border-left: 4px solid;
+        position: relative;
+    }
+    
+    .morning { border-left-color: #ffd700; }
+    .work { border-left-color: #4a90e2; }
+    .recovery { border-left-color: #50c878; }
+    .flex { border-left-color: #ff6b6b; }
+    .evening { border-left-color: #9b59b6; }
+    .sleep { border-left-color: #34495e; }
+    
+    .time-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+    }
+    
+    .block-name {
+        font-weight: 700;
+        font-size: 16px;
+    }
+    
+    .time-range {
+        font-size: 13px;
+        opacity: 0.8;
+        background: rgba(255,255,255,0.1);
+        padding: 3px 8px;
+        border-radius: 6px;
+    }
+    
+    .purpose {
+        font-size: 14px;
+        opacity: 0.9;
+        margin-bottom: 8px;
+        font-style: italic;
+    }
+    
+    .activities {
+        font-size: 13px;
+        opacity: 0.8;
+        margin-bottom: 10px;
+    }
+    
+    .block-actions {
+        display: flex;
+        gap: 8px;
+        margin-top: 10px;
+    }
+    
+    .action-btn {
+        background: rgba(255,255,255,0.1);
+        border: 1px solid rgba(255,255,255,0.2);
+        color: #ffffff;
+        padding: 5px 10px;
+        border-radius: 6px;
+        font-size: 12px;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    
+    .action-btn:hover {
+        background: rgba(255,255,255,0.2);
+    }
+    
+    .action-btn.completed {
+        background: rgba(80, 200, 120, 0.3);
+        border-color: #50c878;
+    }
+    
+    .weekend-note {
+        background: rgba(255,215,0,0.1);
+        border: 1px solid rgba(255,215,0,0.3);
+        border-radius: 8px;
+        padding: 10px;
+        margin-bottom: 10px;
+        font-size: 13px;
+    }
+    
+    .weekend-note strong {
+        color: #ffd700;
+    }
+    
+    .goals-section {
+        background: rgba(255,255,255,0.1);
+        border-radius: 12px;
+        padding: 15px;
+        margin-top: 20px;
+    }
+    
+    .goals-title {
+        font-weight: 700;
+        font-size: 16px;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+    
+    .goal-category {
+        margin-bottom: 10px;
+        padding: 8px;
+        background: rgba(255,255,255,0.05);
+        border-radius: 8px;
+    }
+    
+    .goal-label {
+        font-weight: 600;
+        font-size: 14px;
+        margin-bottom: 3px;
+    }
+    
+    .goal-text {
+        font-size: 12px;
+        opacity: 0.9;
+    }
+    
+    .summer-adjustments {
+        background: rgba(255,165,0,0.1);
+        border: 1px solid rgba(255,165,0,0.3);
+        border-radius: 12px;
+        padding: 15px;
+        margin-top: 15px;
+    }
+    
+    .summer-adjustments h3 {
+        margin: 0 0 10px 0;
+        color: #ffa500;
+        font-size: 16px;
+    }
+    
+    .adjustment-item {
+        font-size: 13px;
+        margin-bottom: 5px;
+        opacity: 0.9;
+    }
+    
+    .climate-actions {
+        background: rgba(34,139,34,0.1);
+        border: 1px solid rgba(34,139,34,0.3);
+        border-radius: 8px;
+        padding: 10px;
+        margin-top: 10px;
+    }
+    
+    .climate-actions h4 {
+        margin: 0 0 8px 0;
+        color: #50c878;
+        font-size: 14px;
+    }
+    
+    .climate-action {
+        font-size: 12px;
+        margin-bottom: 4px;
+        opacity: 0.9;
+        cursor: pointer;
+        padding: 3px 6px;
+        border-radius: 4px;
+        transition: background 0.2s;
+    }
+    
+    .climate-action:hover {
+        background: rgba(80,200,120,0.2);
+    }
+    
+    .climate-action.completed {
+        background: rgba(80,200,120,0.3);
+        text-decoration: line-through;
+    }
+    
+    .daily-tracker {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: rgba(255,255,255,0.15);
+        backdrop-filter: blur(10px);
+        border-radius: 12px;
+        padding: 15px;
+        border: 1px solid rgba(255,255,255,0.2);
+        max-width: 250px;
+    }
+    
+    .tracker-title {
+        font-weight: 600;
+        font-size: 14px;
+        margin-bottom: 8px;
+        text-align: center;
+    }
+    
+    .tracker-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 6px;
+        font-size: 12px;
+    }
+    
+    .tracker-checkbox {
+        width: 16px;
+        height: 16px;
+        border: 2px solid rgba(255,255,255,0.3);
+        border-radius: 3px;
+        cursor: pointer;
+        position: relative;
+    }
+    
+    .tracker-checkbox.checked {
+        background: #50c878;
+        border-color: #50c878;
+    }
+    
+    .tracker-checkbox.checked::after {
+        content: '✓';
+        position: absolute;
+        color: white;
+        font-size: 10px;
+        top: -2px;
+        left: 2px;
+    }
+    
+    .energy-meter {
+        margin-top: 10px;
+        text-align: center;
+    }
+    
+    .energy-level {
+        display: flex;
+        gap: 4px;
+        justify-content: center;
+        margin-top: 5px;
+    }
+    
+    .energy-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.2);
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    
+    .energy-dot.active {
+        background: #ffd700;
+    }
+    
+    @media (max-width: 600px) {
+        .daily-tracker {
+            position: static;
+            margin-top: 20px;
+            max-width: none;
+        }
+    }
+</style>
+```
+
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌱 Weekly Rhythm System</h1>
+            <p>Flexible Time Blocks for Sustainable Success</p>
+        </div>
+
+```
+    <div class="view-toggle">
+        <button class="toggle-btn active" onclick="switchView('weekday')">Weekday</button>
+        <button class="toggle-btn" onclick="switchView('weekend')">Weekend</button>
+        <button class="toggle-btn" onclick="switchView('review')">Monthly Review</button>
+    </div>
+
+    <!-- WEEKDAY VIEW -->
+    <div id="weekday-view" class="view-section active">
+        <div class="time-block morning">
+            <div class="time-header">
+                <span class="block-name">Morning Foundation ☀️</span>
+                <span class="time-range">5:00-8:00 AM</span>
+            </div>
+            <div class="purpose">Regulate body + set the tone</div>
+            <div class="activities">Wake-up ritual, home workout, movement, hygiene, journaling, creative work, light breakfast, optional commute</div>
+            <div class="block-actions">
+                <button class="action-btn" onclick="toggleComplete(this)">Complete</button>
+                <button class="action-btn" onclick="addNote(this)">Add Note</button>
+            </div>
+        </div>
+        
+        <div class="time-block work">
+            <div class="time-header">
+                <span class="block-name">Primary Work Block 💼</span>
+                <span class="time-range">8:00 AM-2:00 PM</span>
+            </div>
+            <div class="purpose">Paid work (focus, meetings, output)</div>
+            <div class="activities">Work tasks, deep focus, meetings, emails, project delivery, occasional lunch</div>
+            <div class="block-actions">
+                <button class="action-btn" onclick="toggleComplete(this)">Complete</button>
+                <button class="action-btn" onclick="addNote(this)">Add Note</button>
+            </div>
+        </div>
+        
+        <div class="time-block recovery">
+            <div class="time-header">
+                <span class="block-name">Body Recovery 💤</span>
+                <span class="time-range">2:00-4:00 PM</span>
+            </div>
+            <div class="purpose">Restore energy + reduce symptoms</div>
+            <div class="activities">Nap (full REM or rest), light snack, hydration, gentle breathwork, light stretching</div>
+            <div class="block-actions">
+                <button class="action-btn" onclick="toggleComplete(this)">Complete</button>
+                <button class="action-btn" onclick="addNote(this)">Add Note</button>
+            </div>
+        </div>
+        
+        <div class="time-block flex">
+            <div class="time-header">
+                <span class="block-name">Afternoon Flex 🔄</span>
+                <span class="time-range">4:00-5:30 PM</span>
+            </div>
+            <div class="purpose">Lighter collaboration or self-care</div>
+            <div class="activities">Climate calls, PT or sauna, early dinner prep, errands, creative catch-up</div>
+            <div class="climate-actions">
+                <h4>🌍 Climate Actions (Pick 1-2)</h4>
+                <div class="climate-action" onclick="toggleClimateAction(this)">Call/email 1 elected official about climate policy</div>
+                <div class="climate-action" onclick="toggleClimateAction(this)">Research & support 1 climate organization</div>
+                <div class="climate-action" onclick="toggleClimateAction(this)">Plan/prep plant-based meals for next day</div>
+                <div class="climate-action" onclick="toggleClimateAction(this)">Bike/walk instead of drive for errands</div>
+                <div class="climate-action" onclick="toggleClimateAction(this)">Review/reduce energy usage at home</div>
+            </div>
+            <div class="block-actions">
+                <button class="action-btn" onclick="toggleComplete(this)">Complete</button>
+                <button class="action-btn" onclick="addNote(this)">Add Note</button>
+            </div>
+        </div>
+        
+        <div class="time-block work">
+            <div class="time-header">
+                <span class="block-name">Evening Work 💻</span>
+                <span class="time-range">5:30-7:30 PM</span>
+            </div>
+            <div class="purpose">Paid work (light execution)</div>
+            <div class="activities">Admin tasks, follow-ups, slides, inbox zero, async communications</div>
+            <div class="block-actions">
+                <button class="action-btn" onclick="toggleComplete(this)">Complete</button>
+                <button class="action-btn" onclick="addNote(this)">Add Note</button>
+            </div>
+        </div>
+        
+        <div class="time-block evening">
+            <div class="time-header">
+                <span class="block-name">Wind-Down Ritual 🌙</span>
+                <span class="time-range">7:30-9:30 PM</span>
+            </div>
+            <div class="purpose">Ease nervous system into sleep mode</div>
+            <div class="activities">Skincare, sauna (if not done earlier), tea, soft music, reading, journaling, low light</div>
+            <div class="block-actions">
+                <button class="action-btn" onclick="toggleComplete(this)">Complete</button>
+                <button class="action-btn" onclick="addNote(this)">Add Note</button>
+            </div>
+        </div>
+        
+        <div class="time-block sleep">
+            <div class="time-header">
+                <span class="block-name">Sleep Block 😴</span>
+                <span class="time-range">9:30 PM-5:00 AM</span>
+            </div>
+            <div class="purpose">7.5 hours restorative sleep</div>
+            <div class="activities">CPAP use, blackout sleep, 7.5 hours of uninterrupted rest</div>
+            <div class="block-actions">
+                <button class="action-btn" onclick="toggleComplete(this)">Complete</button>
+                <button class="action-btn" onclick="addNote(this)">Add Note</button>
+            </div>
+        </div>
+        
+        <div class="summer-adjustments">
+            <h3>☀️ Summer Adjustments</h3>
+            <div class="adjustment-item">• Earlier outdoor activities (before 10am heat)</div>
+            <div class="adjustment-item">• Extra hydration during recovery block</div>
+            <div class="adjustment-item">• Blackout curtains essential for sleep</div>
+            <div class="adjustment-item">• AC/fan for sleep optimization</div>
+            <div class="adjustment-item">• Flexible timing for social events</div>
+        </div>
+    </div>
+
+    <!-- WEEKEND VIEW -->
+    <div id="weekend-view" class="view-section">
+        <div class="weekend-note">
+            <strong>Weekend Variation:</strong> Lighter structure, more flexibility, but maintain core health habits
+        </div>
+        
+        <div class="time-block morning">
+            <div class="time-header">
+                <span class="block-name">Gentle Morning 🌅</span>
+                <span class="time-range">6:00-9:00 AM</span>
+            </div>
+            <div class="purpose">Slower pace, maintain rhythm</div>
+            <div class="activities">Natural wake-up, gentle movement, leisurely breakfast, optional creative time</div>
+            <div class="block-actions">
+                <button class="action-btn" onclick="toggleComplete(this)">Complete</button>
+                <button class="action-btn" onclick="addNote(this)">Add Note</button>
+            </div>
+        </div>
+        
+        <div class="time-block flex">
+            <div class="time-header">
+                <span class="block-name">Weekend Activities 🎯</span>
+                <span class="time-range">9:00 AM-2:00 PM</span>
+            </div>
+            <div class="purpose">Personal projects, social time, errands</div>
+            <div class="activities">Social events, personal projects, household tasks, nature time, meal prep</div>
+            <div class="block-actions">
+                <button class="action-btn" onclick="toggleComplete(this)">Complete</button>
+                <button class="action-btn" onclick="addNote(this)">Add Note</button>
+            </div>
+        </div>
+        
+        <div class="time-block recovery">
+            <div class="time-header">
+                <span class="block-name">Midday Rest 🛋️</span>
+                <span class="time-range">2:00-3:30 PM</span>
+            </div>
+            <div class="purpose">Maintain recovery habit</div>
+            <div class="activities">Shorter rest/nap, reading, gentle activities</div>
+            <div class="block-actions">
+                <button class="action-btn" onclick="toggleComplete(this)">Complete</button>
+                <button class="action-btn" onclick="addNote(this)">Add Note</button>
+            </div>
+        </div>
+        
+        <div class="time-block flex">
+            <div class="time-header">
+                <span class="block-name">Weekend Flex 🎨</span>
+                <span class="time-range">3:30-7:30 PM</span>
+            </div>
+            <div class="purpose">Flexible personal time</div>
+            <div class="activities">Creative projects, social time, meal prep, climate actions, self-care</div>
+            <div class="climate-actions">
+                <h4>🌍 Weekend Climate Actions</h4>
+                <div class="climate-action" onclick="toggleClimateAction(this)">Visit farmers market/buy local</div>
+                <div class="climate-action" onclick="toggleClimateAction(this)">Batch cook plant-based meals</div>
+                <div class="climate-action" onclick="toggleClimateAction(this)">Attend climate community event</div>
+                <div class="climate-action" onclick="toggleClimateAction(this)">Home energy/waste audit</div>
+            </div>
+            <div class="block-actions">
+                <button class="action-btn" onclick="toggleComplete(this)">Complete</button>
+                <button class="action-btn" onclick="addNote(this)">Add Note</button>
+            </div>
+        </div>
+        
+        <div class="time-block evening">
+            <div class="time-header">
+                <span class="block-name">Evening Wind-Down 🌙</span>
+                <span class="time-range">7:30-9:30 PM</span>
+            </div>
+            <div class="purpose">Maintain sleep preparation</div>
+            <div class="activities">Same as weekday: skincare, relaxation, reading, low light</div>
+            <div class="block-actions">
+                <button class="action-btn" onclick="toggleComplete(this)">Complete</button>
+                <button class="action-btn" onclick="addNote(this)">Add Note</button>
+            </div>
+        </div>
+        
+        <div class="time-block sleep">
+            <div class="time-header">
+                <span class="block-name">Sleep Block 😴</span>
+                <span class="time-range">9:30 PM-6:00 AM</span>
+            </div>
+            <div class="purpose">8.5 hours on weekends</div>
+            <div class="activities">CPAP use, blackout sleep, extra rest for weekend recovery</div>
+            <div class="block-actions">
+                <button class="action-btn" onclick="toggleComplete(this)">Complete</button>
+                <button class="action-btn" onclick="addNote(this)">Add Note</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MONTHLY REVIEW VIEW -->
+    <div id="review-view" class="view-section">
+        <div class="goals-section">
+            <div class="goals-title">📊 Monthly Review</div>
+            <p style="text-align: center; font-size: 13px; opacity: 0.8; margin-bottom: 15px;">
+                Track patterns, energy, and adjust your rhythm
+            </p>
+            
+            <div style="background: rgba(255,215,0,0.1); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                <h4 style="margin: 0 0 10px 0; color: #ffd700;">Quick Daily Questions</h4>
+                <div style="font-size: 13px; opacity: 0.9;">
+                    • Which blocks did you complete today?<br>
+                    • Energy level (1-10):<br>
+                    • What disrupted your rhythm?<br>
+                    • What felt most energizing?<br>
+                    • Climate actions completed?
+                </div>
+            </div>
+            
+            <div style="background: rgba(74,144,226,0.1); padding: 15px; border-radius: 8px;">
+                <h4 style="margin: 0 0 10px 0; color: #4a90e2;">Monthly Deep Dive</h4>
+                <div style="font-size: 13px; opacity: 0.9;">
+                    At month-end, I'll provide a comprehensive review form to analyze patterns, identify what's working, and adjust your rhythm for the next month.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="goals-section">
+        <div class="goals-title">🎯 Alignment Check</div>
+        
+        <div class="goal-category">
+            <div class="goal-label">💼 Professional Career</div>
+            <div class="goal-text">8 hours focused work (6h primary + 2h evening), meeting flexibility, skill development in morning creative time</div>
+        </div>
+        
+        <div class="goal-category">
+            <div class="goal-label">🎨 Creative Aspirations</div>
+            <div class="goal-text">Morning foundation block (3 hours), afternoon flex overflow, evening wind-down reflection</div>
+        </div>
+        
+        <div class="goal-category">
+            <div class="goal-label">🌍 Climate Goals</div>
+            <div class="goal-text">Dedicated time in afternoon flex block, sustainable living practices integrated throughout</div>
+        </div>
+        
+        <div class="goal-category">
+            <div class="goal-label">💪 Health Priority</div>
+            <div class="goal-text">7.5h sleep + CPAP therapy, 2h recovery block, movement in morning, symptom management built-in</div>
+        </div>
+    </div>
+</div>
+
+<!-- Daily Tracker Sidebar -->
+<div class="daily-tracker">
+    <div class="tracker-title">📝 Today's Rhythm</div>
+    
+    <div class="tracker-item">
+        <span>Morning Foundation</span>
+        <div class="tracker-checkbox" onclick="toggleTracker(this)"></div>
+    </div>
+    <div class="tracker-item">
+        <span>Work Blocks</span>
+        <div class="tracker-checkbox" onclick="toggleTracker(this)"></div>
+    </div>
+    <div class="tracker-item">
+        <span>Recovery Time</span>
+        <div class="tracker-checkbox" onclick="toggleTracker(this)"></div>
+    </div>
+    <div class="tracker-item">
+        <span>Climate Action</span>
+        <div class="tracker-checkbox" onclick="toggleTracker(this)"></div>
+    </div>
+    <div class="tracker-item">
+        <span>Wind-Down Ritual</span>
+        <div class="tracker-checkbox" onclick="toggleTracker(this)"></div>
+    </div>
+    
+    <div class="energy-meter">
+        <div style="font-size: 12px; margin-bottom: 5px;">Energy Level</div>
+        <div class="energy-level">
+            <div class="energy-dot" onclick="setEnergy(1)"></div>
+            <div class="energy-dot" onclick="setEnergy(2)"></div>
+            <div class="energy-dot" onclick="setEnergy(3)"></div>
+            <div class="energy-dot" onclick="setEnergy(4)"></div>
+            <div class="energy-dot" onclick="setEnergy(5)"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // View switching
+    function switchView(viewName) {
+        // Hide all views
+        document.querySelectorAll('.view-section').forEach(section => {
+            section.classList.remove('active');
+        });
+        
+        // Show selected view
+        document.getElementById(viewName + '-view').classList.add('active');
+        
+        // Update toggle buttons
+        document.querySelectorAll('.toggle-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        event.target.classList.add('active');
+    }
+    
+    // Block completion
+    function toggleComplete(btn) {
+        btn.classList.toggle('completed');
+        btn.textContent = btn.classList.contains('completed') ? '✓ Done' : 'Complete';
+    }
+    
+    // Add notes (placeholder)
+    function addNote(btn) {
+        const note = prompt('Add a note about this time block:');
+        if (note) {
+            let noteEl = btn.parentElement.querySelector('.note');
+            if (!noteEl) {
+                noteEl = document.createElement('div');
+                noteEl.className = 'note';
+                noteEl.style.cssText = 'font-size: 12px; opacity: 0.7; margin-top: 8px; font-style: italic;';
+                btn.parentElement.appendChild(noteEl);
+            }
+            noteEl.textContent = '📝 ' + note;
+        }
+    }
+    
+    // Climate action tracking
+    function toggleClimateAction(action) {
+        action.classList.toggle('completed');
+    }
+    
+    // Daily tracker
+    function toggleTracker(checkbox) {
+        checkbox.classList.toggle('checked');
+    }
+    
+    // Energy level
+    function setEnergy(level) {
+        document.querySelectorAll('.energy-dot').forEach((dot, index) => {
+            dot.classList.toggle('active', index < level);
+        });
+    }
+</script>
+```
+
+</body>
+</html>
